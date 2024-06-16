@@ -22,7 +22,7 @@ import java.util.Set;
 @SuppressWarnings({"checkstyle:Indentation", "checkstyle:SummaryJavadoc"})
 public class WordGraph {
     @SuppressWarnings("checkstyle:Indentation")
-    private Map<String, List<String>> adjacencyList;
+    public Map<String, List<String>> adjacencyList;
     @SuppressWarnings("checkstyle:Indentation")
     private Map<String, Integer> edgeWeights;
 
