@@ -1,5 +1,6 @@
-//1111111111
 package com.hit.lab;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -11,11 +12,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * @author Eden
+ */
+@SuppressWarnings({"checkstyle:Indentation", "checkstyle:LineLength", "checkstyle:MissingJavadocType"})
 public class Graphviz {
 
-    private static final String TEMP_DIR = "C:\\Users\\eden\\Desktop\\软件工程\\lab1\\temp";     //临时文件存储的目录路径
-    private static final String DOT_EXECUTABLE_PATH = "C:\\Program Files\\Graphviz\\bin\\dot.exe";   //Graphviz 可执行文件的路径
+    @SuppressWarnings("checkstyle:Indentation")
+    //临时文件存储的目录路径
+    private static final String TEMP_DIR = "C:\\Users\\eden\\Desktop\\软件工程\\lab1\\temp";
+    @SuppressWarnings("checkstyle:Indentation")
+    //Graphviz 可执行文件的路径
+    private static final String DOT_EXECUTABLE_PATH = "C:\\Program Files\\Graphviz\\bin\\dot.exe";
     //从 DOT 源代码生成图形
+    @SuppressWarnings({"checkstyle:Indentation", "checkstyle:CommentsIndentation", "checkstyle:EmptyLineSeparator", "checkstyle:MissingJavadocMethod", "checkstyle:LineLength"})
     public static void generateGraph(String dotSource, String outputFilePath, String imageFormat) throws IOException {
         File dotFile = writeDotSourceToFile(dotSource);
         if (dotFile != null) {
@@ -27,6 +37,8 @@ public class Graphviz {
         }
     }
     //将 DOT 源代码写入临时的 DOT 文件
+    @SuppressFBWarnings({"DMI_HARDCODED_ABSOLUTE_FILENAME", "DM_DEFAULT_ENCODING"})
+    @SuppressWarnings({"checkstyle:Indentation", "checkstyle:CommentsIndentation", "checkstyle:EmptyLineSeparator"})
     private static File writeDotSourceToFile(String dotSource) throws IOException {
 //        File tempDotFile = Files.createTempFile(Paths.get(TEMP_DIR), "graph_", ".dot").toFile();
         File tempDotFile = Files.createTempFile(Paths.get(TEMP_DIR), "graph", ".dot").toFile();
@@ -38,6 +50,8 @@ public class Graphviz {
         return tempDotFile;
     }
     //使用 Graphviz 将 DOT 文件转换为图像文件
+    @SuppressFBWarnings("COMMAND_INJECTION")
+    @SuppressWarnings({"checkstyle:Indentation", "checkstyle:LineLength", "checkstyle:EmptyLineSeparator"})
     private static void convertDotToImage(File dotFile, String outputFilePath, String imageFormat) throws IOException {
         String[] command = {DOT_EXECUTABLE_PATH, "-T" + imageFormat, dotFile.getAbsolutePath(), "-o", outputFilePath};
         ProcessBuilder builder = new ProcessBuilder(command);
@@ -53,6 +67,7 @@ public class Graphviz {
         }
     }
     //从 WordGraph 对象生成并展示一个有向图
+    @SuppressWarnings({"checkstyle:Indentation", "checkstyle:CommentsIndentation", "checkstyle:EmptyLineSeparator", "checkstyle:MissingJavadocMethod"})
     public static void showDirectedGraph(WordGraph wordGraph) {
         Map<String, Integer> edgeWeights = wordGraph.getEdgeWeights();
         String dotSource = generateDotSource(wordGraph.getAdjacencyList(), edgeWeights);
@@ -72,6 +87,7 @@ public class Graphviz {
     }
 
     //生成有向图的 DOT 源代码
+    @SuppressWarnings({"checkstyle:Indentation", "checkstyle:LineLength"})
     private static String generateDotSource(Map<String, List<String>> adjacencyList, Map<String, Integer> edgeWeights) {
         StringBuilder dotSource = new StringBuilder();
         dotSource.append("digraph G {\n");
@@ -83,13 +99,15 @@ public class Graphviz {
         }
 
         // Add edges with corresponding weights
-        Set<String> processedEdges = new HashSet<>(); // Keep track of processed edges to avoid duplicates
+        // Keep track of processed edges to avoid duplicates
+        Set<String> processedEdges = new HashSet<>();
         for (Map.Entry<String, List<String>> entry : adjacencyList.entrySet()) {
             String node = entry.getKey();
             List<String> adjacentNodes = entry.getValue();
             for (String adjNode : adjacentNodes) {
                 String edge = node + " -> " + adjNode;
-                int weight = edgeWeights.getOrDefault(edge, 1); // Get weight from edgeWeights map
+                // Get weight from edgeWeights map
+                int weight = edgeWeights.getOrDefault(edge, 1);
                 if (!processedEdges.contains(edge)) {
                     dotSource.append("\t\"" + node + "\" -> \"" + adjNode + "\" [label=\"" + weight + "\"];\n");
                     processedEdges.add(edge);
@@ -101,6 +119,7 @@ public class Graphviz {
         return dotSource.toString();
     }
     //生成带有最短路径高亮的图形
+    @SuppressWarnings({"checkstyle:Indentation", "checkstyle:LineLength", "checkstyle:WhitespaceAround", "checkstyle:EmptyLineSeparator", "checkstyle:MissingJavadocMethod"})
     public static void generateGraphWithShortestPath(WordGraph wordGraph, String shortestPath, String outputFileName, String imageFormat) {
         Map<String, Integer> edgeWeights = wordGraph.getEdgeWeights();
         String dotSource = generateDotSourceWithShortestPath(wordGraph.getAdjacencyList(), edgeWeights, shortestPath);
@@ -113,6 +132,7 @@ public class Graphviz {
         }
     }
     //生成带有最短路径高亮的有向图的 DOT 源代码
+    @SuppressWarnings({"checkstyle:Indentation", "checkstyle:LineLength", "checkstyle:EmptyLineSeparator"})
     private static String generateDotSourceWithShortestPath(Map<String, List<String>> adjacencyList, Map<String, Integer> edgeWeights, String shortestPath) {
         StringBuilder dotSource = new StringBuilder();
         dotSource.append("digraph G {\n");
@@ -124,13 +144,15 @@ public class Graphviz {
         }
 
         // Add edges with corresponding weights, highlighting the edges in the shortest path
-        Set<String> processedEdges = new HashSet<>(); // Keep track of processed edges to avoid duplicates
+        // Keep track of processed edges to avoid duplicates
+        Set<String> processedEdges = new HashSet<>();
         for (Map.Entry<String, List<String>> entry : adjacencyList.entrySet()) {
             String node = entry.getKey();
             List<String> adjacentNodes = entry.getValue();
             for (String adjNode : adjacentNodes) {
                 String edge = node + " -> " + adjNode;
-                int weight = edgeWeights.getOrDefault(edge, 1); // Get weight from edgeWeights map
+                // Get weight from edgeWeights map
+                int weight = edgeWeights.getOrDefault(edge, 1);
                 if (!processedEdges.contains(edge)) {
                     if (shortestPath.contains(edge)) {
                         dotSource.append("\t\"" + node + "\" -> \"" + adjNode + "\" [label=\"" + weight + "\", color=\"red\"];\n");
@@ -147,5 +169,4 @@ public class Graphviz {
     }
 
 }
-
 

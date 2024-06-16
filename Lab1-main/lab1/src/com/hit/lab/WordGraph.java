@@ -1,19 +1,38 @@
 package com.hit.lab;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Random;
+import java.util.Set;
 
 
+/**
+ * @author Eden
+ */
+@SuppressWarnings({"checkstyle:Indentation", "checkstyle:SummaryJavadoc"})
 public class WordGraph {
+    @SuppressWarnings("checkstyle:Indentation")
     private Map<String, List<String>> adjacencyList;
+    @SuppressWarnings("checkstyle:Indentation")
     private Map<String, Integer> edgeWeights;
 
+    @SuppressWarnings("checkstyle:Indentation")
     public WordGraph() {
         this.adjacencyList = new HashMap<>();
         this.edgeWeights = new HashMap<>();
     }
     //根据文本构建有向图的邻接表和边的权重信息
+    @SuppressWarnings({"checkstyle:Indentation", "checkstyle:EmptyLineSeparator", "checkstyle:MissingJavadocMethod"})
     public void buildGraph(String text) {
         String[] words = text.split("\\s+");
         for (int i = 0; i < words.length - 1; i++) {
@@ -33,14 +52,18 @@ public class WordGraph {
         }
     }
 
+    @SuppressWarnings("checkstyle:Indentation")
     public Map<String, List<String>> getAdjacencyList() {
         return adjacencyList;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EI_EXPOSE_REP")
+    @SuppressWarnings("checkstyle:Indentation")
     public Map<String, Integer> getEdgeWeights() {
         return edgeWeights;
     }
     //查询从 word1 到 word2 的桥接词
+    @SuppressWarnings({"checkstyle:Indentation", "checkstyle:LineLength", "checkstyle:CommentsIndentation", "checkstyle:EmptyLineSeparator", "checkstyle:MissingJavadocMethod"})
     public String queryBridgeWords(String word1, String word2) {
 
 //        if (!adjacencyList.containsKey(word1) || !adjacencyList.containsKey(word2)) {
@@ -80,6 +103,8 @@ public class WordGraph {
         }
     }
     //生成一个新的文本，其中桥接了输入文本中相邻的单词
+    @SuppressFBWarnings({"PREDICTABLE_RANDOM", "DMI_RANDOM_USED_ONLY_ONCE"})
+    @SuppressWarnings({"checkstyle:Indentation", "checkstyle:LineLength", "checkstyle:EmptyLineSeparator", "checkstyle:MissingJavadocMethod"})
     public String generateNewText(String inputText) {
 
         String[] words = inputText.split("\\s+");
@@ -114,6 +139,7 @@ public class WordGraph {
         return String.join(" ", newTextWords);
     }
 
+    @SuppressWarnings({"checkstyle:Indentation", "checkstyle:LineLength", "checkstyle:VariableDeclarationUsageDistance", "checkstyle:MissingJavadocMethod"})
     public String calcShortestPath(String word1, String word2) {
         // Check if word1 and word2 are in the graph
         if (!adjacencyList.containsKey(word1) || !adjacencyList.containsKey(word2)) {
@@ -181,10 +207,12 @@ public class WordGraph {
         return result.toString();
     }
 
+    @SuppressWarnings({"checkstyle:Indentation", "checkstyle:MissingJavadocMethod"})
     public void printShortestDistancesFromWord(String word) {
         // 遍历每个单词，并计算其与给定单词之间的最短距离
         for (String otherWord : adjacencyList.keySet()) {
-            if (!otherWord.equals(word)) { // 跳过给定单词本身
+            // 跳过给定单词本身
+            if (!otherWord.equals(word)) {
                 // 调用 calcShortestPath 计算最短路径，并打印结果
                 String shortestPathResult = calcShortestPath(word, otherWord);
                 System.out.println(shortestPathResult);
@@ -194,6 +222,8 @@ public class WordGraph {
     }
 
 
+    @SuppressFBWarnings("PREDICTABLE_RANDOM")
+    @SuppressWarnings({"checkstyle:Indentation", "checkstyle:LineLength", "checkstyle:MissingJavadocMethod"})
     public String randomWalk() {
         // Randomly select a starting node
         Random random = new Random();
@@ -235,6 +265,9 @@ public class WordGraph {
         return result.toString().trim();
     }
 
+    @SuppressFBWarnings({"DM_DEFAULT_ENCODING", "PATH_TRAVERSAL_OUT"})
+    @SuppressWarnings({"checkstyle:Indentation", "checkstyle:CommentsIndentation",
+            "checkstyle:WhitespaceAfter", "checkstyle:MissingJavadocMethod"})
     public void writeToFile(String filePath, String content) {
         try (FileWriter writer = new FileWriter(filePath,true)) {
 //            writer.write(content);

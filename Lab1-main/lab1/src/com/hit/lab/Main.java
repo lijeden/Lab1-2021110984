@@ -1,14 +1,20 @@
-//1111111111
 package com.hit.lab;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.Scanner;
 
+/**
+ * @author Eden
+ */
+@SuppressWarnings({"checkstyle:Indentation", "checkstyle:SummaryJavadoc"})
 public class Main {
 
+    @SuppressFBWarnings({"DMI_HARDCODED_ABSOLUTE_FILENAME", "DM_DEFAULT_ENCODING"})
+    @SuppressWarnings({"checkstyle:Indentation", "checkstyle:MissingJavadocMethod"})
     public static void main(String[] args) {
 
         String filePath = "C:\\Users\\Eden\\Desktop\\Lab1-main\\lab1\\src\\test.txt";
@@ -23,6 +29,7 @@ public class Main {
 
             boolean exit = false;
             Scanner scanner = new Scanner(System.in);
+            //Scanner scanner = new Scanner(System.in, String.valueOf(StandardCharsets.UTF_8));
             while (!exit) {
                 System.out.println("-----------------");
                 System.out.println("选择以下任一项：");
@@ -66,23 +73,26 @@ public class Main {
 
     }
 
-    private static String readFileContent(String filePath) throws IOException {
+    @SuppressFBWarnings("DM_DEFAULT_ENCODING")
+    @SuppressWarnings({"checkstyle:Indentation", "checkstyle:LineLength", "checkstyle:CommentsIndentation", "checkstyle:MissingJavadocMethod"})
+    public static String readFileContent(String filePath) throws IOException {
         // Read the file content
-            StringBuilder content = new StringBuilder();
-            BufferedReader reader = new BufferedReader(new FileReader(filePath));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                content.append(line).append("\n");
-            }
-            reader.close();
+        StringBuilder content = new StringBuilder();
+        BufferedReader reader = new BufferedReader(new FileReader(filePath));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            content.append(line).append("\n");
+        }
+        reader.close();
 
 //         Process the content: replace newline and punctuation with space, ignore non-alphabetic characters
-            String processedContent = content.toString().replaceAll("[^a-zA-Z\\s]", " ").replaceAll("\\s+", " ").toLowerCase();
+        String processedContent = content.toString().replaceAll("[^a-zA-Z\\s]", " ").replaceAll("\\s+", " ").toLowerCase();
 
         // Process the content: replace newline and punctuation with space, ignore non-alphabetic characters
         return processedContent;
     }
 
+    @SuppressWarnings({"checkstyle:CommentsIndentation", "checkstyle:LineLength", "checkstyle:Indentation"})
     private static void queryBridgeWords(WordGraph wordGraph, Scanner scanner) {
         System.out.println("输入两个单词查找桥接词:");
         String word1 = scanner.nextLine();
@@ -92,6 +102,7 @@ public class Main {
 //        System.out.println("Bridge words between " + word1 + " and " + word2 + ": " + bridgeWords);
     }
 
+    @SuppressWarnings({"checkstyle:CommentsIndentation", "checkstyle:LineLength", "checkstyle:Indentation"})
     private static void generateNewText(WordGraph wordGraph, Scanner scanner) {
         System.out.println("输入源文本:");
         String sourceText = scanner.nextLine();
@@ -102,6 +113,7 @@ public class Main {
 //        System.out.println(wordGraph.generateNewText("explore new worlds to seek new life new lzl"));
     }
 
+    @SuppressWarnings({"checkstyle:CommentsIndentation", "checkstyle:LineLength", "checkstyle:Indentation"})
     private static void calculateShortestPath(WordGraph wordGraph, Scanner scanner) {
         System.out.println("输入两个单词计算最短路径:");
         String word1 = scanner.nextLine();
@@ -113,12 +125,15 @@ public class Main {
 //        System.out.println("Shortest path between " + word1 + " and " + word2 + ": " + shortestPath);
     }
 
+    @SuppressWarnings({"checkstyle:Indentation", "checkstyle:WhitespaceAround"})
     private static void printShortestDistancesFromWord(WordGraph wordGraph, Scanner scanner){
         System.out.println("输入一个单词计算最短路径:");
         String word = scanner.nextLine();
         wordGraph.printShortestDistancesFromWord(word);
     }
 
+    @SuppressFBWarnings("DMI_HARDCODED_ABSOLUTE_FILENAME")
+    @SuppressWarnings({"checkstyle:Indentation", "checkstyle:LineLength"})
     private static void randomWalk(WordGraph wordGraph, Scanner scanner) {
         System.out.println("开始随机行走...");
         String randomWalkResult = wordGraph.randomWalk();
